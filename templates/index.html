@@ -9,6 +9,11 @@
 
 <body>
     <h1>Oláaaaaa Mundooo</h1>
+    <ul>
+        {% for task in tasks %}
+            <li>{{ task.description }}</li>
+        {% endfor %}
+    </ul>
 </body>
 
 </html>
