@@ -17,9 +17,30 @@ def index():
 @app.route('/create', methods=["POST"])
 def create_task():
     description = request.form['description']
+
+    existind_task = Tasks.query.filter_by(description = description).first()
+    if existind_task:
+        return 'Erro: Essa tarefa ja existe'
+
     new_task = Tasks(description=description)
     db.session.add(new_task)
     db.session.commit()
+    return redirect('/')
+
+@app.route('/delete/<int:task_id>',methods=['POST'])
+def delete_task(task_id):
+    task = Tasks.query.get(task_id)
+    if task:
+        db.session.delete(task)
+        db.session.commit()
+    return redirect('/')
+
+@app.route('/update/<int:task_id>',methods=['POST'])
+def update_task(task_id):
+    task = Tasks.query.get(task_id)
+    if task:
+        task.description = request.form['description']
+        db.session.commit()
     return redirect('/')
 
 if __name__ == '__main__':

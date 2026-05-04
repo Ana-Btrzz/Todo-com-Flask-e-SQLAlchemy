@@ -4,14 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</title>
+    <title>ToDo com Flask</title>
 </head>
 
 <body>
-    <h1>Oláaaaaa Mundooo</h1>
+    <h1>Adicionar tarefa</h1>
+    <form action="/create" method="POST">
+        <input type="text" name="description" required>
+        <button type="submit">Criar tarefa</button>
+    </form>
+
+    <h2>Lista de tarefas:</h2>
+
     <ul>
         {% for task in tasks %}
-            <li>{{ task.description }}</li>
+            <li style="margin-top: 8px;">
+                <form action="/update/{{ task.id }}" method="POST" style="display: inline;">
+                    <input type="text" name="description" value="{{ task.description }}">
+                    <button type="submit">Atualizar</button>
+                </form>
+                <form action="/delete/{{ task.id }}" method="POST" style="display: inline;"> <button type="submit">Excluir</button> </form>
+            </li>
         {% endfor %}
     </ul>
 </body>
